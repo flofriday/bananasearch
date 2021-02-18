@@ -1,7 +1,6 @@
 package crawl
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -54,7 +53,6 @@ func (d *CachedDownloader) Load(url string) (string, string, error) {
 			return "", "", err
 		}
 
-		fmt.Println("Write cache at: %s", cachePath)
 		ioutil.WriteFile(cachePath, []byte(body), 0644)
 		return body, url, err
 	}
