@@ -2,16 +2,21 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/flofriday/websearch/crawl"
 	"github.com/flofriday/websearch/store"
 )
 
 func main() {
-	waitingQueue := []string{"https://www.orf.at"}
+	if len(os.Args) == 1 {
+		log.Fatal("No seed url provided")
+	}
+
+	waitingQueue := os.Args[1:]
 	visited := make(map[string]bool)
 	index := store.NewIndex("index")
-	limit := 100
+	limit := 10
 
 	downloader := crawl.NewCachedDownloader(crawl.NewDefaultDownloader(), "cache")
 	for len(visited) < limit && len(waitingQueue) > 0 {
@@ -23,6 +28,7 @@ func main() {
 		log.Printf("Downloading: %s", url)
 		body, url, err := downloader.Load(url)
 		if err != nil {
+			log.Printf("ERROR: %s", err.Error())
 			continue
 		}
 		if _, ok := visited[url]; ok {
@@ -50,6 +56,11 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	//log.Print(waitingQueue)
+	// Statistics
+	log.Print("")
+	log.Print("--- Statistics ---")
+	log.Printf("Indexed %d documents ", index.Docs())
+	log.Printf("Indexed %d words", index.Words())
+	log.Printf("%d documents in the waitingqueue", len(waitingQueue))
 
 }

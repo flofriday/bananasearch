@@ -27,9 +27,6 @@ func ExtractLinks(text string, base string) []string {
 	findHref := regexp.MustCompile("href=\".*?\"")
 	baseurl, _ := url.Parse(base)
 
-	// TODO: parse the url to verify that the are valid
-
-	// TODO: remove all hashbangs from urls
 	// TODO: remove duplicate links
 	tags := findTags.FindAllString(text, -1)
 	links := make([]string, 0, len(tags))
@@ -40,7 +37,9 @@ func ExtractLinks(text string, base string) []string {
 		if err != nil {
 			continue
 		}
-		links = append(links, baseurl.ResolveReference(linkurl).String())
+		linkurl = baseurl.ResolveReference(linkurl)
+		linkurl.Fragment = ""
+		links = append(links, linkurl.String())
 	}
 	return links
 }

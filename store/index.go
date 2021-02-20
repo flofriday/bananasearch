@@ -92,3 +92,11 @@ func (i *Index) Save() error {
 
 	return nil
 }
+
+func (i *Index) Docs() int {
+	return len(i.revDocs)
+}
+
+func (i *Index) Words() int {
+	return len(i.words)
+}
