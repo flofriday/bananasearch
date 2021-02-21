@@ -16,7 +16,7 @@ func main() {
 	waitingQueue := os.Args[1:]
 	visited := make(map[string]bool)
 	index := store.NewIndex("index")
-	limit := 10
+	limit := 100
 
 	downloader := crawl.NewCachedDownloader(crawl.NewDefaultDownloader(), "cache")
 	for len(visited) < limit && len(waitingQueue) > 0 {
@@ -59,8 +59,8 @@ func main() {
 	// Statistics
 	log.Print("")
 	log.Print("--- Statistics ---")
-	log.Printf("Indexed %d documents ", index.Docs())
-	log.Printf("Indexed %d words", index.Words())
+	log.Printf("Indexed %d documents ", index.NumDocs())
+	log.Printf("Indexed %d words", index.NumWords())
 	log.Printf("%d documents in the waitingqueue", len(waitingQueue))
 
 }

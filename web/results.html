@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Banana Search</title>
+</head>
+
+<body class="bg-light">
+
+    <div class="container-sm h-100">
+
+        <div class="row mb-5">
+            <div class="jumbotron w-100 text-justify">
+                <h1 class="display-5">Banana Search</h1>
+                <form action="/">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" value="{{.Query}}"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
+                {{len .Results}} Results in {{.Duration}}
+            </div>
+        </div>
+
+        {{range $result := .Results}}
+        <div class="row mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{$result}}</h5>
+                    <a href="{{$result}}">{{$result}}</a>
+                    <p class="card-text">Some text (not yet implemented)</p>
+                    <a href="{{$result}}" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div><strong>Nothing found :(</strong></div>
+        {{end}}
+
+
+        <!-- Load Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
